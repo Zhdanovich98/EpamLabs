@@ -5,7 +5,7 @@
 -   install Apache Tomcat on *"server2"* and *"server3"*
 -   create index.html for *"server2"* and *"server3"*
 -   configures loadbalancer on *"server1"*
--   display status loadbalancer on status *localhost:8080/jkmanager/*
+-   display status loadbalancer on address *localhost:8080/jkmanager/*
 ---
 #### For start: ####
 1.   clone the project from git:
