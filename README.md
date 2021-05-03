@@ -18,7 +18,7 @@ cd ./EpamLabs
 ```
 3.    go to the "task3" branch
 ```sh
-git checkout task2
+git checkout task3
 ```
 4.   start Vagrantfile:
 ```sh
