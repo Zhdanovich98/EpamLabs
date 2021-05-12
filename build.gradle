@@ -53,12 +53,12 @@ abstract class Sort extends DefaultTask {
         for ( int i = 0 ; i < aList.size() ; i++ ) {
             def aVal = aList[i] ? aList[i].toInteger() : 0
             def bVal = bList[i] ? bList[i].toInteger() : 0
-            if ( aVal <=> bVal ) { // only return if non-zero i.e. not equal
+            if ( aVal <=> bVal ) { 
                 return aVal <=> bVal
         }
     }
 
-    bList.size() > aList.size() ? -1 : 0 // all facets match up to now, if b has additional parts it must be later version
+    bList.size() > aList.size() ? -1 : 0 
 }
         println unsortedArray
     }
