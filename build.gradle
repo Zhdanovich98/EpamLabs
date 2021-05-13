@@ -36,10 +36,12 @@ war {
 	doFirst{
 	    //ant.propertyfile(file: "./src/main/resources/greeting.txt") {
         //entry(key: "version", value: version)
+            archiveFileName = 'ep-task.war'
             new File('./build/resources/main/greeting.txt').withWriter('utf-8') { 
-            writer -> writer.writeLine version  
+            writer -> writer.writeLine version 
    } 
 }
+
 }
 
 abstract class Sort extends DefaultTask {
