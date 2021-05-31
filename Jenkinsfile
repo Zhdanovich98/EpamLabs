@@ -1,0 +1,81 @@
+pipeline {
+    agent any
+    tools {
+        gradle 'gradle'
+    }
+    stages {
+        stage('clone') {
+            steps {
+                git branch: 'task4', url: 'https://github.com/Zhdanovich98/EpamLabs.git'
+            }
+        }
+        stage('up version') {
+            steps {
+                sh 'gradle up_version'
+            }
+        }
+        stage('build') {
+            steps {
+                sh 'gradle build'
+            }
+        }
+        stage('load to nexus') {
+           environment {
+                   VERSION = sh(returnStdout: true, script: 'cat ./gradle.properties | grep version | cut -d"=" -f2').trim()
+              }
+            steps {
+                nexusArtifactUploader artifacts: [[artifactId: 'test', classifier: '', file: './build/libs/ep-task.war', type: 'war']], credentialsId: 'admin', groupId: 'snapshots', nexusUrl: '192.168.1.6:8081/nexus', nexusVersion: 'nexus2', protocol: 'http', repository: 'maven', version: env.VERSION
+            }
+        }
+        stage('load from nexus to server2/server3') {
+           environment {
+                   VERSION = sh(returnStdout: true, script: 'cat ./gradle.properties | grep version | cut -d"=" -f2').trim()
+                   ARTIFACT_URL = "http://192.168.1.6:8081/nexus/content/repositories/maven/snapshots/test/$VERSION/test-$VERSION"+"."+"war"
+              }
+            steps {
+                sshagent(['jenkins_ssh']) {
+                    sh "ssh -o StrictHostKeyChecking=no -v -i /var/lib/jenkins/.ssh/id_rsa vagrant@192.168.1.2 'wget $ARTIFACT_URL && unzip test-$VERSION"+"."+"war -d ROOT && rm test-$VERSION"+"."+"war'"
+                    sh "ssh -o StrictHostKeyChecking=no -v -i /var/lib/jenkins/.ssh/id_rsa vagrant@192.168.1.3 'wget $ARTIFACT_URL && unzip test-$VERSION"+"."+"war -d ROOT && rm test-$VERSION"+"."+"war'"
+                }
+            }
+        }
+        stage('update tomcat from server2') {
+            steps {
+                sshagent(['jenkins_ssh']) {
+                    sh "ssh -o StrictHostKeyChecking=no -v -i /var/lib/jenkins/.ssh/id_rsa vagrant@192.168.1.2 'sudo rm -R /var/lib/tomcat/webapps/ROOT && sudo mv /home/vagrant/ROOT /var/lib/tomcat/webapps/ROOT && sudo systemctl restart tomcat'"
+                }
+            }
+        }
+        stage('update tomcat from server3') {
+            steps {
+                sshagent(['jenkins_ssh']) {
+                    sh "ssh -o StrictHostKeyChecking=no -v -i /var/lib/jenkins/.ssh/id_rsa vagrant@192.168.1.3 'sudo rm -R /var/lib/tomcat/webapps/ROOT && sudo mv /home/vagrant/ROOT /var/lib/tomcat/webapps/ROOT && sudo systemctl restart tomcat'"
+                }
+            }
+        }
+        stage('git') {
+            environment {
+                    VERSION = sh(returnStdout: true, script: 'cat ./gradle.properties | grep version | cut -d"=" -f2').trim()
+                }
+            steps {
+                sh 'git config user.email "you@gmain.com"'
+                sh 'git config user.name "Zhdanovich98"'
+                sh 'git remote remove origin'
+                sh 'git remote add origin https://Zhdanovich98:Zhdanovich1998@github.com/Zhdanovich98/EpamLabs.git'
+                sh 'git add gradle.properties'
+                sh 'git commit -m "update to $VERSION"'
+                sh 'git tag v$VERSION'
+                sh 'git push origin task4'
+                sh 'git push origin v$VERSION'
+                sh 'git remote remove origin'
+        }
+    }
+    }
+    post {
+        always {
+            script {    
+            step([$class: 'WsCleanup'])
+       }
+    }
+}
+}
