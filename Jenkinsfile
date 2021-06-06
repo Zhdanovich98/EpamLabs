@@ -4,9 +4,9 @@ pipeline {
         gradle 'gradle'
     }
     stages {
-        stage('clone') {
+       stage('clone') {
             steps {
-                git branch: 'task4', url: 'https://github.com/Zhdanovich98/EpamLabs.git'
+                git branch: 'gradle', credentialsId: 'git_ssh', url: 'git@github.com:Zhdanovich98/ServletWebLogic.git'
             }
         }
         stage('up version') {
@@ -73,16 +73,15 @@ pipeline {
                     VERSION = sh(returnStdout: true, script: 'cat ./gradle.properties | grep version | cut -d"=" -f2').trim()
                 }
             steps {
-                sh 'git config user.email "you@gmain.com"'
-                sh 'git config user.name "Zhdanovich98"'
-                sh 'git remote remove origin'
-                sh 'git remote add origin https://Zhdanovich98:Zhdanovich1998@github.com/Zhdanovich98/EpamLabs.git'
-                sh 'git add gradle.properties'
-                sh 'git commit -m "update to $VERSION"'
-                sh 'git tag v$VERSION'
-                sh 'git push origin task4'
-                sh 'git push origin v$VERSION'
-                sh 'git remote remove origin'
+                sshagent(['git_ssh']) {
+                    sh 'git config user.email "you@gmain.com"'
+                    sh 'git config user.name "Zhdanovich98"'
+                    sh 'git add gradle.properties'
+                    sh 'git commit -m "update to $VERSION"'
+                    sh 'git tag v$VERSION'
+                    sh 'git push origin task4'
+                    sh 'git push origin v$VERSION'
+            }
         }
     }
     }
