@@ -6,7 +6,7 @@ pipeline {
     stages {
        stage('clone') {
             steps {
-                git branch: 'gradle', credentialsId: 'git_ssh', url: 'git@github.com:Zhdanovich98/EpamLabs.git'
+                git branch: 'task4', credentialsId: 'git_ssh', url: 'git@github.com:Zhdanovich98/EpamLabs.git'
             }
         }
         stage('up version') {
