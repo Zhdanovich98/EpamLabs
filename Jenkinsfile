@@ -39,18 +39,21 @@ pipeline {
                 }
             }
         }
-        stage('update tomcat from server2') {
+        stage('update tomcat from server2/server3') {
             steps {
                 sshagent(['jenkins_ssh']) {
                     sh "ssh -o StrictHostKeyChecking=no -v -i /var/lib/jenkins/.ssh/id_rsa vagrant@192.168.1.2 'sudo rm -R /var/lib/tomcat/webapps/ROOT && sudo mv /home/vagrant/ROOT /var/lib/tomcat/webapps/ROOT && sudo systemctl restart tomcat'"
+                    sh "ssh -o StrictHostKeyChecking=no -v -i /var/lib/jenkins/.ssh/id_rsa vagrant@192.168.1.3 'sudo rm -R /var/lib/tomcat/webapps/ROOT && sudo mv /home/vagrant/ROOT /var/lib/tomcat/webapps/ROOT && sudo systemctl restart tomcat'"
                 }
             }
         }
-        stage('update tomcat from server3') {
-            steps {
-                sshagent(['jenkins_ssh']) {
-                    sh "ssh -o StrictHostKeyChecking=no -v -i /var/lib/jenkins/.ssh/id_rsa vagrant@192.168.1.3 'sudo rm -R /var/lib/tomcat/webapps/ROOT && sudo mv /home/vagrant/ROOT /var/lib/tomcat/webapps/ROOT && sudo systemctl restart tomcat'"
+        stage('verify') {
+            environment {
+                    VERSION = sh(returnStdout: true, script: 'cat ./gradle.properties | grep version | cut -d"=" -f2').trim()
                 }
+            steps {
+                sh 'curl http://192.168.1.2:8080 | grep "<p>"'
+                sh 'curl http://192.168.1.3:8080 | grep "<p>"'
             }
         }
         stage('git') {
