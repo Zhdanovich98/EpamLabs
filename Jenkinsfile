@@ -47,13 +47,25 @@ pipeline {
                 }
             }
         }
-        stage('verify') {
-            environment {
-                    VERSION = sh(returnStdout: true, script: 'cat ./gradle.properties | grep version | cut -d"=" -f2').trim()
+        stage('check version on servers') {
+           environment {
+                   VERSION = sh(returnStdout: true, script: 'cat ./gradle.properties | grep version | cut -d"=" -f2').trim()
                 }
             steps {
-                sh 'curl http://192.168.1.2:8080 | grep "<p>"'
-                sh 'curl http://192.168.1.3:8080 | grep "<p>"'
+                script {
+                int i = 1;
+                while(i<=2) {
+                def part1 = sh(script: 'curl -s http://192.168.1.'+(1+i)+':8080 | grep "<p>"', returnStdout: true).trim().split("<")
+                def part2 = part1[1].split(">")
+                if (part2[1] == env.VERSION) {
+                    println "verify match";
+                    i++;
+                } else {
+                    currentBuild.result = 'ABORTED'
+                    error('the versions do not match')
+                }
+                }
+                }
             }
         }
         stage('git') {
