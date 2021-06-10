@@ -5,10 +5,10 @@
 -   build project(increment version, build war, upload to nexus)
 > *stages: 'up version', 'build', 'load to nexus'*
 -   download war from nexus on server1/server2(workers with tomcat)
-> *stages: 'load from nexus to server2/server3'*
+> *stage: 'load from nexus to server2/server3'*
 -   deploy into server1/server2
 > *stages: 'update tomcat from server2', 'update tomcat from server3'*
 -   push changes to github, add tag with version from gradle.properties
-> *stages: 'git'*
+> *stage: 'git'*
 -   removes the working directory
 ---
