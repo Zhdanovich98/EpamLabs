@@ -13,6 +13,6 @@
 -   validate deploy of service(with curl)
 > *stage: 'check version on server'*
 -   push changes to github, add tag with version from gradle.properties
-> *stages: 'git'*
+> *stage: 'git'*
 -   removes the working directory
 ---
