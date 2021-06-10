@@ -4,10 +4,14 @@
 > *stage: 'clone'*
 -   build project(increment version, build war, upload to nexus)
 > *stages: 'up version', 'build', 'load to nexus'*
--   download war from nexus on server1/server2(workers with tomcat)
-> *stages: 'load from nexus to server2/server3'*
--   deploy into server1/server2
-> *stages: 'update tomcat from server2', 'update tomcat from server3'*
+-   build docker image and publish it to docker registry(docker build, docker tag, docker push)
+> *stage: 'build docker image && add tag && publish image to docker registry'*
+>
+> *docker registry is located at 192.168.1.6:5000*
+-   freate or update swarm service(docker service create, docker service update)
+> *stages: 'update swarm service3', 'create swarm service'*
+-   validate deploy of service(with curl)
+> *stage: 'check version on server'*
 -   push changes to github, add tag with version from gradle.properties
 > *stages: 'git'*
 -   removes the working directory

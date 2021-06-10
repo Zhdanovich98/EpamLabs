@@ -58,7 +58,7 @@ pipeline {
                 }
             }
         }
-        stage('create service') {
+        stage('create swarm service') {
             environment {
                 VERSION = sh(returnStdout: true, script: 'cat ./gradle.properties | grep version | cut -d"=" -f2').trim()
                 }
@@ -72,7 +72,7 @@ pipeline {
             }
         }
         
-        stage('check version on servers') {
+        stage('check version on server') {
             environment {
                    VERSION = sh(returnStdout: true, script: 'cat ./gradle.properties | grep version | cut -d"=" -f2').trim()
                 }
