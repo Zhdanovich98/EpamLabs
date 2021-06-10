@@ -1,4 +1,4 @@
-### Task 5: "Jenkins pipelines, Nexus" ###
+### Task 6: "Containers (Docker engine, Docker compose)" ###
 #### This Jenkinsfile: ####
 -   clone java application from github([task4](https://github.com/Zhdanovich98/EpamLabs.git))
 > *stage: 'clone'*
