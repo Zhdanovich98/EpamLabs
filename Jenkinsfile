@@ -47,7 +47,7 @@ pipeline {
                 def part = sh(script: 'docker service ls', returnStdout: true).trim().split(" ");
                 while(i!=part.length){
                 if (part[i] == "task6"){
-                    sh 'docker service update  --publish-add published=8080,target=8080 --replicas 1 --image 192.168.1.6:5000/task6:$VERSION task6'
+                    sh 'docker service update  --publish-add published=8082,target=8080 --replicas 1 --image 192.168.1.6:5000/task6:$VERSION task6'
                     skipCreateServiceStages = true
                     break;
                 } else {
@@ -68,7 +68,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'docker service create --name task6  --publish published=8080,target=8080 --replicas 1 192.168.1.6:5000/task6:$VERSION'
+                sh 'docker service create --name task6  --publish published=8082,target=8080 --replicas 1 192.168.1.6:5000/task6:$VERSION'
             }
         }
         
@@ -78,7 +78,7 @@ pipeline {
                 }
             steps {
                 script {
-                def part1 = sh(script: 'curl -s http://localhost:8080/task6 | grep "<p>"', returnStdout: true).trim().split("<")
+                def part1 = sh(script: 'curl -s http://192.168.1.5:8082 | grep "<p>"', returnStdout: true).trim().split("<")
                 def part2 = part1[1].split(">")
                 if (part2[1] == env.VERSION) {
                     println "verify match";
