@@ -55,9 +55,8 @@ pipeline {
                 script {
                 int i = 1;
                 while(i<=2) {
-                def part1 = sh(script: 'curl -s http://192.168.1.'+(1+i)+':8080 | grep "<p>"', returnStdout: true).trim().split("<")
-                def part2 = part1[1].split(">")
-                if (part2[1] == env.VERSION) {
+                def part = sh(script: 'curl -s http://192.168.1.'+(1+i)+':8080 | head -3 | tail -1 | tr -d "<p>" | tr -d "/"', returnStdout: true).trim()
+                if (part == env.VERSION) {
                     println "verify match";
                     i++;
                 } else {
