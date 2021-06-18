@@ -1,9 +1,11 @@
 ### Task 6: "Containers (Docker engine, Docker compose)" ###
 #### This Jenkinsfile: ####
--   clone java application from github([task4](https://github.com/Zhdanovich98/EpamLabs/tree/task4))
+-   clone java application from github with gradle files and dockerfile([task4](https://github.com/Zhdanovich98/EpamLabs/tree/task4))
 > *stage: 'clone'*
 -   build project(increment version, build war, upload to nexus)
 > *stages: 'up version', 'build', 'load to nexus'*
+>
+> *nexus is located at 192.168.1.6:8081*
 -   build docker image and publish it to docker registry(docker build, docker tag, docker push)
 > *stage: 'build docker image && add tag && publish image to docker registry'*
 >
