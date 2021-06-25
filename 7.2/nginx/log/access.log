@@ -1,0 +1,13 @@
+::1 - - [22/Jun/2021:09:06:36 +0300] "GET /icons/ubuntu-logo.png HTTP/1.1" 404 209 "http://localhost/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36"
+::1 - - [22/Jun/2021:09:06:36 +0300] "GET /favicon.ico HTTP/1.1" 404 209 "http://localhost/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36"
+::1 - - [22/Jun/2021:09:06:37 +0300] "GET / HTTP/1.1" 304 0 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36"
+::1 - - [22/Jun/2021:09:06:37 +0300] "GET /icons/ubuntu-logo.png HTTP/1.1" 404 209 "http://localhost/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36"
+::1 - - [22/Jun/2021:09:06:38 +0300] "GET / HTTP/1.1" 304 0 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36"
+::1 - - [22/Jun/2021:09:06:38 +0300] "GET /icons/ubuntu-logo.png HTTP/1.1" 404 209 "http://localhost/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36"
+::1 - - [22/Jun/2021:09:06:38 +0300] "GET / HTTP/1.1" 304 0 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36"
+::1 - - [22/Jun/2021:09:06:38 +0300] "GET /icons/ubuntu-logo.png HTTP/1.1" 404 209 "http://localhost/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36"
+::1 - - [22/Jun/2021:09:06:38 +0300] "GET / HTTP/1.1" 304 0 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36"
+::1 - - [22/Jun/2021:09:06:38 +0300] "GET /icons/ubuntu-logo.png HTTP/1.1" 404 209 "http://localhost/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36"
+::1 - - [22/Jun/2021:09:06:38 +0300] "GET / HTTP/1.1" 304 0 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36"
+::1 - - [22/Jun/2021:09:06:38 +0300] "GET /icons/ubuntu-logo.png HTTP/1.1" 404 209 "http://localhost/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36"
+::1 - - [22/Jun/2021:09:17:01 +0300] "GET /hginx HTTP/1.1" 404 209 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko)
