@@ -17,7 +17,7 @@ your preferred browser.
 > *types.db - this is the file that defines the collectd data source specification, and influxdb needs this file to understand collectd’s data.*
 ---
 #### 7.2 Elasticsearch, Logstash, Kibana, Filebeat: ####
-This task is done using docker-compose, it includes 2 containers ([elk](https://hub.docker.com/r/sebp/elk), [filebeat](https://hub.docker.com/_/filebeat/plans/6656606a-73e9-4a5c-bab5-dfdd147a9f18?tab=instructions)).
+This task is done using docker-compose, it includes 4 containers ([elasticsearch](https://hub.docker.com/_/elasticsearch), [logstash](https://hub.docker.com/_/logstash), [kibana](https://hub.docker.com/_/kibana) [filebeat](https://hub.docker.com/_/filebeat/plans/6656606a-73e9-4a5c-bab5-dfdd147a9f18?tab=instructions)).
 ##### To start the monitoring stack run: ##### 
 ```sh
 . .env
