@@ -4,10 +4,6 @@ services:
   elasticsearch:
     image: elasticsearch:7.13.2
     volumes:
-      - type: bind
-        source: ./elasticsearch/config/elasticsearch.yml
-        target: /usr/share/elasticsearch/config/elasticsearch.yml
-        read_only: true
       - type: volume
         source: elasticsearch
         target: /usr/share/elasticsearch/data
@@ -15,18 +11,17 @@ services:
       - "9200:9200"
       - "9300:9300"
     environment:
-      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-      ELASTIC_PASSWORD: changeme
+      - cluster.name=docker-cluster
+      - network.host=0.0.0.0
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - ELASTIC_PASSWORD=${PASSWORD}
     networks:
       - elk
 
   logstash:
     image: logstash:7.13.2
     volumes:
-      - type: bind
-        source: ./logstash/config/logstash.yml
-        target: /usr/share/logstash/config/logstash.yml
-        read_only: true
       - type: bind
         source: ./logstash/pipeline
         target: /usr/share/logstash/pipeline
@@ -37,7 +32,11 @@ services:
     expose: 
       - "5044"
     environment:
-      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+      - "LS_JAVA_OPTS=-Xms256m -Xmx256m"
+      - http.host=0.0.0.0
+      - xpack.monitoring.elasticsearch.hosts="http://elasticsearch:9200"
+      - xpack.monitoring.elasticsearch.username=${LOGIN}
+      - xpack.monitoring.elasticsearch.password=${PASSWORD}
     networks:
       - elk
     depends_on:
@@ -45,17 +44,18 @@ services:
 
   kibana:
     image: kibana:7.13.2
-    volumes:
-      - type: bind
-        source: ./kibana/config/kibana.yml
-        target: /usr/share/kibana/config/kibana.yml
-        read_only: true
     ports:
       - "5601:5601"
     networks:
       - elk
     depends_on:
       - elasticsearch
+    environment:
+      - server.name=kibana
+      - server.host=0.0.0.0
+      - elasticsearch.hosts="http://elasticsearch:9200"
+      - elasticsearch.username=${LOGIN}
+      - elasticsearch.password=${PASSWORD}
 
   filebeat:
     image: store/elastic/filebeat:7.13.2
