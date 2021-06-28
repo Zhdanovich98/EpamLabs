@@ -20,6 +20,9 @@ your preferred browser.
 This task is done using docker-compose, it includes 2 containers ([elk](https://hub.docker.com/r/sebp/elk), [filebeat](https://hub.docker.com/_/filebeat/plans/6656606a-73e9-4a5c-bab5-dfdd147a9f18?tab=instructions)).
 ##### To start the monitoring stack run: ##### 
 ```sh
+. .env
+```
+```sh
 docker-compose up
 ```
 Verify the deployment by navigating to your server address in
@@ -27,6 +30,9 @@ your preferred browser.
 ```sh
  127.0.0.1:5601
 ```
-> *filebeat.docker.yml - file containing configuration for Filebeat.*
-
+> */filebeat/config/filebeat.docker.yml - file containing configuration for Filebeat.*
+> 
+> */nginx/log/*.log - example directory on host with log files.*
+> 
+> */logstash/pipeline/nginx.conf -  file configuration for Logstash*
 ---
