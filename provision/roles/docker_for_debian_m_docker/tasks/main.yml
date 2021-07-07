@@ -33,12 +33,14 @@
         src: daemon.json
         dest: /etc/docker/
         owner: root
-        group: docker
+        group: root
         mode: '0666'
+      become: yes
 
     - name: Restart service docker
       ansible.builtin.service:
         name: docker
         state: restarted
       changed_when: False
+      become: yes
       
