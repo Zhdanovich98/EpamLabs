@@ -1,0 +1,9 @@
+---
+- hosts: all
+  gather_facts: yes
+  roles:
+    - role: docker_for_debian_m_vagrant
+      when: ansible_facts['os_family'] == 'Debian'
+
+#    - role: docker_for_debian_m_docker
+#      when: ansible_facts['os_family'] == 'Debian'
