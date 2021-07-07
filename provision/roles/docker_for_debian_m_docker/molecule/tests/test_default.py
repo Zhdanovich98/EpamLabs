@@ -19,7 +19,7 @@ def test_svc(host, svc):
 
 
 @pytest.mark.parametrize('file, content', [(
-        "/etc/docker/daemon.json", "192.168.102.223:5000")])
+        "/etc/docker/daemon.json", "192.168.1.6:5000")])
 def test_files(host, file, content):
     file = host.file(file)
     assert file.exists
