@@ -18,6 +18,7 @@ scenario:
   name: default
 verifier:
   name: testinfra
+  directory: ../tests/
   options:
     sudo: true
 lint: |
