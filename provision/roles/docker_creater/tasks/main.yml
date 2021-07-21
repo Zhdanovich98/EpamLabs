@@ -1,0 +1,56 @@
+---
+    - shell: docker ps | awk '{ print $11 }' | grep 8082
+      register: result_82
+      ignore_errors: yes
+
+    - shell: docker ps | awk '{ print $11 }' | grep 8083
+      register: result_83
+      ignore_errors: yes
+
+    - name: print result_82 variable
+      ansible.builtin.debug:
+        var: result_82
+
+    - name: print result_83 variable
+      ansible.builtin.debug:
+        var: result_83
+
+    - name: Create task6_1
+      docker_container:
+        name: task6_1
+        image: 192.168.1.6:5000/task6:{{my_version}}
+        ports:
+        - "8082:8080"
+      when: result_82.failed and not result_83.failed
+
+    - name: Stop task6_2
+      docker_container:
+        name: task6_2
+        state: stopped
+        state: absent
+      ignore_errors: yes
+      when: result_82.failed and not result_83.failed
+
+    - name: Create task6_2
+      docker_container:
+        name: task6_2
+        image: 192.168.1.6:5000/task6:{{my_version}}
+        ports:
+        - "8083:8080"
+      when: result_83.failed and not result_82.failed
+
+    - name: Stop task6_1
+      docker_container:
+        name: task6_1
+        state: stopped
+        state: absent
+      ignore_errors: yes
+      when: result_83.failed and not result_82.failed
+
+    - name: Create task6_1 for start
+      docker_container:
+        name: task6_1
+        image: 192.168.1.6:5000/task6:{{my_version}}
+        ports:
+        - "8082:8080"
+      when: result_82.failed and result_83.failed

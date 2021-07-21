@@ -1,0 +1,25 @@
+---
+    - name: Update apt list
+      apt: update_cache=yes
+      become: yes
+      
+    - name: Install nginx using apt
+      apt: name=nginx state=latest update_cache=yes force_apt_get=yes
+      become: yes
+
+    - name: Copy file with owner and permissions
+      ansible.builtin.copy:
+        src: nginx.conf
+        dest: /etc/nginx/
+        owner: root
+        group: root
+        mode: '0666'
+      become: yes
+
+    - name: Restart service nginx
+      ansible.builtin.service:
+        name: nginx
+        state: restarted
+      changed_when: False
+      become: yes
+      

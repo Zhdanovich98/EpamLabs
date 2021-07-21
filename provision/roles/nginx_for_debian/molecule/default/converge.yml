@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include nginx_for_debian"
+      include_role:
+        name: "nginx_for_debian"
