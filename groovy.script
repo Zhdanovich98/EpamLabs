@@ -1,0 +1,22 @@
+import groovy.json.JsonSlurper
+// Set the URL we want to read from, it is MySQL from official Library for this example, limited to 20 results only.
+docker_image_tags_url = "http://192.168.1.6:5000/v2/task6/tags/list"
+try {
+    def http_client = new URL(docker_image_tags_url).openConnection() as HttpURLConnection
+    http_client.setRequestMethod('GET')
+    http_client.connect()
+    def dockerhub_response = [:]    
+    if (http_client.responseCode == 200) {
+        dockerhub_response = new JsonSlurper().parseText(http_client.inputStream.getText('UTF-8'))
+    } else {
+        println("HTTP response error")
+        System.exit(0)
+    }
+    def image_tag_list = []
+    dockerhub_response.tags.each { tag_metadata ->
+        image_tag_list.add(tag_metadata)    
+    }
+    return image_tag_list
+} catch (Exception e) {
+         println(e)
+}
