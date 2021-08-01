@@ -1,9 +1,9 @@
 ---
-    - shell: docker ps | awk '{ print $11 }' | grep 8082
+    - shell: curl -s http://localhost:8082
       register: result_82
       ignore_errors: yes
 
-    - shell: docker ps | awk '{ print $11 }' | grep 8083
+    - shell: curl -s http://localhost:8083
       register: result_83
       ignore_errors: yes
 
