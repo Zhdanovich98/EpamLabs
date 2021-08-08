@@ -7,14 +7,6 @@
       register: result_83
       ignore_errors: yes
 
-    - name: print result_82 variable
-      ansible.builtin.debug:
-        var: result_82
-
-    - name: print result_83 variable
-      ansible.builtin.debug:
-        var: result_83
-
     - name: Create task6_1 for start
       docker_container:
         name: task6_1
@@ -31,19 +23,18 @@
         - "8082:8080"
       when: result_82.failed and not result_83.failed
 
-    - name: Pause 15 seconds
-      pause:
-        seconds: 15
+    - name: wait task6_1
+      wait_for:
+        host: 127.0.0.1
+        port: 8082
+        delay: 10
+        connect_timeout: 3
       when: result_82.failed and not result_83.failed
 
     - name: Check 8082
       shell: curl -s http://localhost:8082
       register: result_82_1
       ignore_errors: yes
-
-    - name: print result_82_1 variable
-      ansible.builtin.debug:
-        var: result_82_1
 
     - name: Stop task6_2
       docker_container:
@@ -61,9 +52,12 @@
         - "8083:8080"
       when: result_83.failed and not result_82.failed
 
-    - name: Pause 15 seconds
-      pause:
-        seconds: 15
+    - name: wait task6_2
+      wait_for:
+        host: 127.0.0.1
+        port: 8083
+        delay: 10
+        connect_timeout: 3
       when: result_83.failed and not result_82.failed
 
     - name: Check 8083
