@@ -15,6 +15,17 @@
         - "8082:8080"
       when: result_82.failed and result_83.failed
 
+    - name:  wait task6_1 for start
+      uri:
+        url: http://localhost:8082
+        return_content: yes
+        method: GET
+      register: _result
+      until: _result.status == 200
+      retries: 15
+      delay: 5
+      when: result_82.failed and result_83.failed
+
     - name: Create task6_1
       docker_container:
         name: task6_1
@@ -23,12 +34,15 @@
         - "8082:8080"
       when: result_82.failed and not result_83.failed
 
-    - name: wait task6_1
-      wait_for:
-        host: 127.0.0.1
-        port: 8082
-        delay: 10
-        connect_timeout: 3
+    - name:  wait task6_1
+      uri:
+        url: http://localhost:8082
+        return_content: yes
+        method: GET
+      register: _result
+      until: _result.status == 200
+      retries: 15
+      delay: 5
       when: result_82.failed and not result_83.failed
 
     - name: Check 8082
@@ -53,11 +67,14 @@
       when: result_83.failed and not result_82.failed
 
     - name: wait task6_2
-      wait_for:
-        host: 127.0.0.1
-        port: 8083
-        delay: 10
-        connect_timeout: 3
+      uri:
+        url: http://localhost:8083
+        return_content: yes
+        method: GET
+      register: _result
+      until: _result.status == 200
+      retries: 15
+      delay: 5
       when: result_83.failed and not result_82.failed
 
     - name: Check 8083
