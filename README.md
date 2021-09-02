@@ -1,9 +1,9 @@
 ### Task 4: "Gradle" ###
 #### This build.gradle: ####
--   have version, ex: 1.0.1 (specified in gradle.properties)
--   have increment version task *"up_version"*
--   have the task to populate greetings.txt file with version 
--   have the task of sorting the array *"sort"*
+-   has version, ex: 1.0.1 (specified in gradle.properties)
+-   has increment version task *"up_version"*
+-   has the task to populate greetings.txt file with version
+-   has the task of sorting the array *"sort"*
 ---
 #### For start: ####
 1.   clone the project from git:
