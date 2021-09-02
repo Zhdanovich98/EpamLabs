@@ -1,5 +1,5 @@
 ### Task 8: Configuration Management ###
-#### In this task, completed: ####
+#### In this task: ####
 -   installed [Ansible](https://docs.ansible.com/), [Molecule](https://molecule.readthedocs.io/en/latest/)
 -   created a virtual machine using [Vagrant](https://www.vagrantup.com/docs)
 -   created a role (*docker installation, configuring the daemon to use an unsafe registry setting*) using Ansible.
