@@ -1,11 +1,11 @@
 ### Task 3: "Load balancing with Apache Httpd, Tomcat" ###
 #### This Vagrantfile: ####
 -   creates 3 virtual machines (CentOS 7 minimal): *"server1", "server2", "server3"*
--   install Apache httpd on *"server1"*
--   install Apache Tomcat on *"server2"* and *"server3"*
--   create index.html for *"server2"* and *"server3"*
+-   installs Apache httpd on *"server1"*
+-   installs Apache Tomcat on *"server2"* and *"server3"*
+-   creates index.html for *"server2"* and *"server3"*
 -   configures loadbalancer on *"server1"*
--   display status loadbalancer on address *http://localhost:8080/jkmanager/*
+-   displays status loadbalancer on address *http://localhost:8080/jkmanager/*
 ---
 #### For start: ####
 1.   clone the project from git:
