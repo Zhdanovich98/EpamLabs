@@ -1,5 +1,5 @@
 ### Task 10: Amazon Web Services (AWS) ###
-#### In this task, completed: ####
+#### In this task: ####
 -   created free tier account
 -   created custom VPC, LB, Autoscaling Group with Terraform
 -   created instance, created a “Hello World” page (used Nginx web server) with Terraform
