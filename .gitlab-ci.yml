@@ -1,0 +1,51 @@
+stages:
+  - init
+  - build
+  - destroy
+
+default:
+  tags:
+    - $RUNNER
+
+
+init:
+  stage: init
+  script:
+    - terraform --version
+
+build:
+  stage: build
+  before_script:
+    - export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID1
+    - export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY1
+    - export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION1
+    - ssh-keygen -t rsa -f terraform-keys2 -q -P ""
+    - terraform init
+    - terraform validate
+    - mkdir ./builds
+  script:
+    - terraform apply -auto-approve
+  after_script:
+    - cp ./terraform.tfstate ./builds/
+    - cp ./terraform-keys2.pub ./builds/
+    - cp ./terraform-keys2 ./builds/
+  artifacts:
+    paths:
+      - ./builds/
+
+
+destroy:
+  stage: destroy
+  before_script:
+    - export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID1
+    - export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY1
+    - export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION1
+    - cp ./builds/terraform.tfstate ./
+    - cp ./builds/terraform-keys2.pub ./``
+    - terraform init
+  script:
+    - terraform destroy -auto-approve
+  when: manual
+  artifacts:
+    paths:
+      - ./builds/
