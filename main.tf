@@ -11,12 +11,12 @@ terraform {
 
 provider "aws" {
   profile = "default"
-  region  = "us-east-1"
+  region  = "us-east-2"
 }
 
 resource "aws_launch_template" "foobar" {
   name_prefix            = "foobar"
-  image_id               = "ami-09e67e426f25ce0d7"
+  image_id               = "ami-0629230e074c580f2"
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.ssh-allowed.id]
   key_name               = aws_key_pair.terraform-keys2.key_name
@@ -94,7 +94,7 @@ resource "aws_subnet" "prod-subnet-public-1" {
   vpc_id                  = aws_vpc.prod-vpc.id
   cidr_block              = "10.0.1.0/24"
   map_public_ip_on_launch = "true" //it makes this a public subnet
-  availability_zone       = "us-east-1a"
+  availability_zone       = "us-east-2a"
   tags = {
     Name = "prod-subnet-public-1"
   }
